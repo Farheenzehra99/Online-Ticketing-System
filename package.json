@@ -1,0 +1,28 @@
+{
+  "name": "project-13-online-ticketing-system",
+  "version": "2.1.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "chalk": "^5.3.0",
+    "crypt": "^0.0.2",
+    "event": "^1.0.0",
+    "inquirer": "^9.2.23",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@types/bcrypt": "^5.0.2",
+    "@types/inquirer": "^9.0.7",
+    "@types/uuid": "^10.0.0"
+  }
+}

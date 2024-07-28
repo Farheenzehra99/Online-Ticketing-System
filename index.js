@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import inquirer from 'inquirer';
 import { signup, login } from './userManagement.js';
 import { createEvent, listEvents, purchaseTickets, viewPurchaseHistory } from './eventManagement.js';

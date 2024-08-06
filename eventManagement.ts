@@ -185,4 +185,4 @@ function viewPurchaseHistory(user: User) {
   });
 }
 
-export { createEvent, listEvents, purchaseTickets, viewPurchaseHistory };
+export { createEvent, listEvents, purchaseTickets, viewPurchaseHistory, editEvent };

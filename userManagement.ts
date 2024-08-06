@@ -13,7 +13,7 @@ async function signup() {
         { type: 'input', name: 'name', message: 'Enter your name:' },
         { type: 'input', name: 'email', message: 'Enter your email:' },
         { type: 'input', name: 'password', message: 'Enter your password:', validate: (value) => value.trim() !== '' },
-        { type: 'password', name: 'confirmPassword', message: 'Confirm your password:', mask: '*' }
+        { type: 'password', name: 'confirmPassword', message: 'Confirm your password:', mask: '*' },
         { type: 'confirm',name:'isAdmin',message: 'Are you an admin?', default: false}
     ]);
 

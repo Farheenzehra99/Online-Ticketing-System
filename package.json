@@ -1,6 +1,6 @@
 {
   "name": "project-13-online-ticketing-system",
-  "version": "2.1.0",
+  "version": "3.3.2",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "bcrypt": "^5.1.1",
     "chalk": "^5.3.0",
     "crypt": "^0.0.2",
@@ -20,7 +21,6 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1",
     "@types/bcrypt": "^5.0.2",
     "@types/inquirer": "^9.0.7",
     "@types/uuid": "^10.0.0"

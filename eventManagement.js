@@ -63,23 +63,24 @@ async function purchaseTickets(user) {
     const ticketCount = parseInt(answers.ticketCount);
     if (event && event.ticketStock >= ticketCount) {
         //    Payment Process
-        const paymentsuccessful = await processPayment();
-        if (paymentsuccessful) {
+        const paymentSuccessful = await processPayment();
+        if (paymentSuccessful) {
             event.ticketStock -= ticketCount;
             const ticket = {
                 eventId: event.id,
                 eventName: event.title,
                 date: new Date(),
-                paymentStatus: "Paid",
-                quantity: 0,
+                quantity: ticketCount,
+                paymentStatus: "Paid"
             };
             user.purchaseHistory.push(ticket);
             console.log(chalk.green("Tickets purchased successfully."));
         }
         else {
-            console.log(chalk.red("Tickets purchase failed.Please Try Again"));
+            console.log(chalk.red("Ticket purchase failed. Please try again."));
         }
-        // } else {
+    }
+    else {
         console.log(chalk.red("Not enough tickets available."));
     }
 }
@@ -98,13 +99,13 @@ async function processPayment() {
         },
         { type: "input", name: "cvv", message: "Enter your card CVV:" },
     ]);
-    // Simulate payment procesing delay
+    // Simulate payment processing delay
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    // Fake payment processing delay
-    const paymentsuccessful = faker.datatype.boolean();
-    return paymentsuccessful;
+    // Fake payment processing result
+    const paymentSuccessful = faker.datatype.boolean();
+    return paymentSuccessful;
 }
-//  view the purchase history for the logged-in user
+// View the purchase history for the logged-in user
 function viewPurchaseHistory(user) {
     if (user.purchaseHistory.length === 0) {
         console.log(chalk.yellow("No purchase history available."));

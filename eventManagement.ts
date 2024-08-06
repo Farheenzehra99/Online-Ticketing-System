@@ -50,9 +50,51 @@ function listEvents() {
     );
   });
 }
+// Function to edit an event
+async function editEvent() {
+  if (events.length === 0) {
+      console.log(chalk.yellow('No events available to edit.'));
+      return;
+  }
+
+  const eventChoices = events.map((event) => ({
+      name: `${event.title} - ${event.date.toISOString().split('T')[0]} - ${event.city}`,
+      value: event.id,
+  }));
+
+  const answers = await inquirer.prompt([
+      {
+          type: 'list',
+          name: 'eventId',
+          message: 'Select an event to edit:',
+          choices: eventChoices,
+      },
+      { type: 'input', name: 'title', message: 'Enter new event title (leave blank to keep current):' },
+      { type: 'input', name: 'date', message: 'Enter new event date (YYYY-MM-DD, leave blank to keep current):' },
+      { type: 'input', name: 'city', message: 'Enter new event city (leave blank to keep current):' },
+      {
+          type: 'input',
+          name: 'ticketStock',
+          message: 'Enter new ticket stock (leave blank to keep current):',
+          validate: (input) => input === '' || !isNaN(parseInt(input)),
+      },
+  ]);
+
+  const event = events.find((e) => e.id === answers.eventId);
+
+  if (event) {
+      event.title = answers.title || event.title;
+      event.date = answers.date ? new Date(answers.date) : event.date;
+      event.city = answers.city || event.city;
+      event.ticketStock = answers.ticketStock ? parseInt(answers.ticketStock) : event.ticketStock;
+
+      console.log(chalk.green('Event updated successfully.'));
+  }
+}
+
 
 // Purchase tickets for selected event
-async function purchaseTickets(user: any) {
+async function purchaseTickets(user: User) {
   const eventChoices = events.map((event) => ({
     name: `${event.title} - ${event.date.toISOString().split("T")[0]} - ${
       event.city
@@ -80,25 +122,25 @@ async function purchaseTickets(user: any) {
 
   if (event && event.ticketStock >= ticketCount) {
     //    Payment Process
-    const paymentsuccessful = await processPayment();
-    if (paymentsuccessful) {
+    const paymentSuccessful = await processPayment();
+    if (paymentSuccessful) {
       event.ticketStock -= ticketCount;
 
       const ticket: Ticket = {
         eventId: event.id,
         eventName: event.title,
         date: new Date(),
-        paymentStatus: "Paid",
-        quantity: 0,
+        quantity: ticketCount,
+        paymentStatus: "Paid"
       };
 
       user.purchaseHistory.push(ticket);
 
       console.log(chalk.green("Tickets purchased successfully."));
     } else {
-      console.log(chalk.red("Tickets purchase failed.Please Try Again"));
+      console.log(chalk.red("Ticket purchase failed. Please try again."));
     }
-    // } else {
+  } else {
     console.log(chalk.red("Not enough tickets available."));
   }
 }
@@ -119,15 +161,16 @@ async function processPayment(): Promise<boolean> {
     { type: "input", name: "cvv", message: "Enter your card CVV:" },
   ]);
 
-  // Simulate payment procesing delay
+  // Simulate payment processing delay
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  // Fake payment processing delay
-  const paymentsuccessful = faker.datatype.boolean();
+  // Fake payment processing result
+  const paymentSuccessful = faker.datatype.boolean();
 
-  return paymentsuccessful;
+  return paymentSuccessful;
 }
-//  view the purchase history for the logged-in user
+
+// View the purchase history for the logged-in user
 function viewPurchaseHistory(user: User) {
   if (user.purchaseHistory.length === 0) {
     console.log(chalk.yellow("No purchase history available."));
